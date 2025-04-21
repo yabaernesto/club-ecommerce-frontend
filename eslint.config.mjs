@@ -12,6 +12,7 @@ export default defineConfig([
     ...tseslint.configs.recommended,
     rules: {
       "react/react-in-jsx-escope": "off",
+      "no-use-before-define": "off",
     }
   },
   pluginReact.configs.flat.recommended,
