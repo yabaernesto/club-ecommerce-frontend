@@ -1,18 +1,26 @@
+import { useNavigate } from 'react-router-dom'
+import { BsCart3 } from 'react-icons/bs'
+
 import {
   HeaderContainer,
   HeaderItems,
   HeaderItem,
   HeaderTitle
 } from './header.styles'
-import { BsCart3 } from 'react-icons/bs'
 
 const Header = () => {
+  const navigate = useNavigate()
+
+  const handleLoginClick = () => {
+    navigate('/login')
+  }
+
   return (
     <HeaderContainer>
       <HeaderTitle>CLUB CLOTHING</HeaderTitle>
       <HeaderItems>
         <HeaderItem>Explorar</HeaderItem>
-        <HeaderItem>Login</HeaderItem>
+        <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
         <HeaderItem>Criar Conta</HeaderItem>
         <HeaderItem>
           {/* Forcando a tipagem do icone */}
