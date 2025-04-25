@@ -16,14 +16,19 @@ import {
   LoginSubtitle
 } from './login.styles'
 
+interface LoginForm {
+  email: string
+  password: string
+}
+
 const LoginPage = () => {
   const {
     register,
     formState: { errors },
     handleSubmit
-  } = useForm()
+  } = useForm<LoginForm>()
 
-  const handleSubmitPress = (data: any) => {
+  const handleSubmitPress = (data: LoginForm) => {
     console.log({ data })
   }
 
