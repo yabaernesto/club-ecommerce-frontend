@@ -2,6 +2,12 @@ import { BsGoogle } from 'react-icons/bs'
 import { FiLogIn } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
 import { isEmail } from 'validator'
+import {
+  AuthErrorCodes,
+  signInWithEmailAndPassword,
+  type AuthError
+} from 'firebase/auth'
+import { auth } from '../../config/firebase.config'
 
 import CustomButton from '../../components/custom-button/custom-button.component'
 import Header from '../../components/header/header.component'
@@ -25,11 +31,30 @@ const LoginPage = () => {
   const {
     register,
     formState: { errors },
+    setError,
     handleSubmit
   } = useForm<LoginForm>()
 
-  const handleSubmitPress = (data: LoginForm) => {
-    console.log({ data })
+  const handleSubmitPress = async (data: LoginForm) => {
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      )
+
+      console.log({ userCredentials })
+    } catch (error) {
+      const _error = error as AuthError
+
+      if (_error.code === AuthErrorCodes.INVALID_PASSWORD) {
+        return setError('password', { type: 'mismatch' })
+      }
+
+      if (_error.code === AuthErrorCodes.USER_DELETED) {
+        return setError('email', { type: 'notFound' })
+      }
+    }
   }
 
   return (
@@ -59,14 +84,18 @@ const LoginPage = () => {
               })}
             />
 
-            {errors?.password?.type === 'required' && (
+            {errors?.email?.type === 'required' && (
               <InputErrorMessage>O e-mail e obrigatória.</InputErrorMessage>
             )}
 
-            {errors?.password?.type === 'validate' && (
+            {errors?.email?.type === 'validate' && (
               <InputErrorMessage>
                 Por favor insira um e-mail valido.
               </InputErrorMessage>
+            )}
+
+            {errors?.email?.type === 'notFound' && (
+              <InputErrorMessage>O e-mail nao encontrado.</InputErrorMessage>
             )}
           </LoginInputContainer>
 
@@ -81,6 +110,10 @@ const LoginPage = () => {
 
             {errors?.password?.type === 'required' && (
               <InputErrorMessage>A senha e obrigatória.</InputErrorMessage>
+            )}
+
+            {errors?.email?.type === 'mismatch' && (
+              <InputErrorMessage>A senha e invalida.</InputErrorMessage>
             )}
           </LoginInputContainer>
 
