@@ -5,9 +5,11 @@ import { isEmail } from 'validator'
 import {
   AuthErrorCodes,
   signInWithEmailAndPassword,
-  type AuthError
+  signInWithPopup,
+  AuthError
 } from 'firebase/auth'
-import { auth } from '../../config/firebase.config'
+import { auth, db, googleProvider } from '../../config/firebase.config'
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
 
 import CustomButton from '../../components/custom-button/custom-button.component'
 import Header from '../../components/header/header.component'
@@ -57,6 +59,36 @@ const LoginPage = () => {
     }
   }
 
+  const handleSignInWithGooglePress = async () => {
+    try {
+      const userCredential = await signInWithPopup(auth, googleProvider)
+
+      const querySnapshot = await getDocs(
+        query(
+          collection(db, 'users'),
+          where('id', '==', userCredential.user.uid)
+        )
+      )
+
+      const user = querySnapshot.docs[0]?.data()
+
+      if (!user) {
+        const firstName = userCredential.user.displayName?.split(' ')[0]
+        const lastName = userCredential.user.displayName?.split(' ')[1]
+
+        await addDoc(collection(db, 'users'), {
+          id: userCredential.user.uid,
+          email: userCredential.user.email,
+          firstName,
+          lastName,
+          provider: 'google'
+        })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <Header />
@@ -65,7 +97,10 @@ const LoginPage = () => {
         <LoginContent>
           <LoginHeadline>Entre com a sua conta</LoginHeadline>
 
-          <CustomButton startIcon={<BsGoogle size={18} />}>
+          <CustomButton
+            startIcon={<BsGoogle size={18} />}
+            onClick={handleSignInWithGooglePress}
+          >
             Entrar com o Google
           </CustomButton>
 
