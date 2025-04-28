@@ -1,6 +1,8 @@
 import { FiLogIn } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
 import { isEmail } from 'validator'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { addDoc, collection } from 'firebase/firestore'
 
 import CustomInput from '../../components/cunstom-input/custom-input.component'
 import CustomButton from '../../components/custom-button/custom-button.component'
@@ -13,6 +15,8 @@ import {
   SignUpHeadline,
   SignUpInputContainer
 } from './sign-up.stales'
+
+import { auth, db } from '../../config/firebase.config'
 
 interface SignUpForm {
   name: string
@@ -32,8 +36,23 @@ const SignUpPage = () => {
 
   const watchPassword = watch('password')
 
-  const handleSubmitPress = (data: SignUpForm) => {
-    console.log(data)
+  const handleSubmitPress = async (data: SignUpForm) => {
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      )
+
+      await addDoc(collection(db, 'users'), {
+        id: userCredentials.user.uid,
+        firstName: data.name,
+        lastName: data.lastName,
+        email: userCredentials.user.email
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
