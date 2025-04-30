@@ -1,5 +1,7 @@
 import Category from '../../types/category.types'
 
+import ProductItem from '../product-item/product-item.component'
+
 import {
   CategoryContainer,
   CategoryTitle,
@@ -15,7 +17,11 @@ const CategoryOverview = ({ category }: CategoryOverview) => {
     <CategoryContainer>
       <CategoryTitle>{category.displayName}</CategoryTitle>
 
-      <ProductsContainer></ProductsContainer>
+      <ProductsContainer>
+        {category.products?.slice(0, 4).map((product) => (
+          <ProductItem key={product.id} product={product} />
+        ))}
+      </ProductsContainer>
     </CategoryContainer>
   )
 }
