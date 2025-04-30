@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import { FiLogIn } from 'react-icons/fi'
@@ -15,6 +15,7 @@ import CustomInput from '../../components/cunstom-input/custom-input.component'
 import CustomButton from '../../components/custom-button/custom-button.component'
 import InputErrorMessage from '../../components/input-error-message/input-error-message.component'
 import Header from '../../components/header/header.component'
+import Loading from '../../components/loading/loading.component'
 
 import {
   SignUpContainer,
@@ -45,6 +46,8 @@ const SignUpPage = () => {
 
   const watchPassword = watch('password')
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const { isAuthenticated } = useContext(UserContext)
 
   const navigate = useNavigate()
@@ -57,6 +60,8 @@ const SignUpPage = () => {
 
   const handleSubmitPress = async (data: SignUpForm) => {
     try {
+      setIsLoading(true)
+
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
         data.email,
@@ -76,12 +81,16 @@ const SignUpPage = () => {
       if (_error.code === AuthErrorCodes.EMAIL_EXISTS) {
         return setError('email', { type: 'alreadyInUse' })
       }
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return (
     <>
       <Header />
+
+      {isLoading && <Loading />}
 
       <SignUpContainer>
         <SignUpContent>
