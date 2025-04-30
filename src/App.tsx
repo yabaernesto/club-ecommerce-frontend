@@ -8,33 +8,39 @@ import SignUpPage from './pages/sign-up/sign-up.page'
 
 import { auth, db } from './config/firebase.config'
 
-import { useContext, useEffect } from 'react'
+import { useContext, useState } from 'react'
 import { UserContext } from './contexts/user.context'
 
 const App = () => {
+  const [isInitializing, setIsInitialing] = useState(true)
+
   const { isAuthenticated, loginUser, logout } = useContext(UserContext)
 
-  useEffect(() => {
-    onAuthStateChanged(auth, async (user) => {
-      const isSigningOut = isAuthenticated && !user
+  onAuthStateChanged(auth, async (user) => {
+    const isSigningOut = isAuthenticated && !user
 
-      if (isSigningOut) {
-        return logout()
-      }
+    if (isSigningOut) {
+      logout()
+      return setIsInitialing(false)
+    }
 
-      const isSigningIn = !isAuthenticated && user
+    const isSigningIn = !isAuthenticated && user
 
-      if (isSigningIn) {
-        const querySnapshot = await getDocs(
-          query(collection(db, 'users'), where('id', '==', user.uid))
-        )
+    if (isSigningIn) {
+      const querySnapshot = await getDocs(
+        query(collection(db, 'users'), where('id', '==', user.uid))
+      )
 
-        const userFromFirestore = querySnapshot.docs[0]?.data()
+      const userFromFirestore = querySnapshot.docs[0]?.data()
 
-        return loginUser(userFromFirestore as any)
-      }
-    })
-  }, [isAuthenticated, loginUser, logout])
+      loginUser(userFromFirestore as any)
+      return setIsInitialing(false)
+    }
+
+    return setIsInitialing(false)
+  })
+
+  if (isInitializing) return null
 
   return (
     <BrowserRouter>
