@@ -1,6 +1,9 @@
+import { useContext, useEffect } from 'react'
+
 import { BsGoogle } from 'react-icons/bs'
 import { FiLogIn } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { isEmail } from 'validator'
 import {
   AuthErrorCodes,
@@ -8,7 +11,6 @@ import {
   signInWithPopup,
   AuthError
 } from 'firebase/auth'
-import { auth, db, googleProvider } from '../../config/firebase.config'
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
 
 import CustomButton from '../../components/custom-button/custom-button.component'
@@ -24,6 +26,9 @@ import {
   LoginSubtitle
 } from './login.styles'
 
+import { auth, db, googleProvider } from '../../config/firebase.config'
+import { UserContext } from '../../contexts/user.context'
+
 interface LoginForm {
   email: string
   password: string
@@ -36,6 +41,16 @@ const LoginPage = () => {
     setError,
     handleSubmit
   } = useForm<LoginForm>()
+
+  const { isAuthenticated } = useContext(UserContext)
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/')
+    }
+  }, [isAuthenticated])
 
   const handleSubmitPress = async (data: LoginForm) => {
     try {

@@ -1,3 +1,6 @@
+import { useContext, useEffect } from 'react'
+
+import { useNavigate } from 'react-router-dom'
 import { FiLogIn } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
 import { isEmail } from 'validator'
@@ -21,6 +24,7 @@ import {
 } from './sign-up.stales'
 
 import { auth, db } from '../../config/firebase.config'
+import { UserContext } from '../../contexts/user.context'
 
 interface SignUpForm {
   name: string
@@ -40,6 +44,16 @@ const SignUpPage = () => {
   } = useForm<SignUpForm>()
 
   const watchPassword = watch('password')
+
+  const { isAuthenticated } = useContext(UserContext)
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/')
+    }
+  }, [isAuthenticated])
 
   const handleSubmitPress = async (data: SignUpForm) => {
     try {
