@@ -15,6 +15,7 @@ import { UserContext } from './contexts/user.context'
 import { userConverter } from './converters/firestore.converters'
 
 import Loading from './components/loading/loading.component'
+import CategoryDetailsPage from './pages/category-details/category-details.page'
 
 const App = () => {
   const [isInitializing, setIsInitialing] = useState(true)
@@ -55,6 +56,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/explore' element={<ExplorePage />} />
+        <Route path='/category/:id' element={<CategoryDetailsPage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/sign-up' element={<SignUpPage />} />
       </Routes>
