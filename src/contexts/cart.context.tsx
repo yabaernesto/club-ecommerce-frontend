@@ -75,15 +75,15 @@ const CartContextProvider = ({ children }: CartContextProps) => {
 
   // remover produto do carrinho
   const removeProductFromCart = (productId: string) => {
-    setProducts(products =>
+    setProducts((products) =>
       products.filter((product) => product.id !== productId)
     )
   }
 
   // aumentar a quantidade do produto
-  const increaseProductQuantity = (productId: string) {
-    setProducts(products => 
-      products.map((product) => 
+  const increaseProductQuantity = (productId: string) => {
+    setProducts((products) =>
+      products.map((product) =>
         product.id === productId
           ? { ...product, quantity: product.quantity + 1 }
           : product
@@ -93,12 +93,14 @@ const CartContextProvider = ({ children }: CartContextProps) => {
 
   // diminuir a quantidade do produto
   const decreaseProductQuantity = (productId: string) => {
-    setProducts(products =>
-      products.map(product => 
-        product.id === productId ? { ...product, quantity: product.quantity - 1}
-        : product
-      )
-      .filter(product => product.quantity > 0)
+    setProducts((products) =>
+      products
+        .map((product) =>
+          product.id === productId
+            ? { ...product, quantity: product.quantity - 1 }
+            : product
+        )
+        .filter((product) => product.quantity > 0)
     )
   }
 
