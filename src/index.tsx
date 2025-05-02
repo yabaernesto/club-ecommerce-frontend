@@ -1,17 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
 import reportWebVitals from './reportWebVitals'
+
+import App from './App'
+
 import UserContextProvider from './contexts/user.context'
 import CategoryContextProvider from './contexts/category.context'
+import CartContextProvider from './contexts/cart.context'
+
+import './index.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <UserContextProvider>
       <CategoryContextProvider>
-        <App />
+        <CartContextProvider>
+          <App />
+        </CartContextProvider>
       </CategoryContextProvider>
     </UserContextProvider>
   </React.StrictMode>
