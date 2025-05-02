@@ -19,7 +19,7 @@ const Header = () => {
   const navigate = useNavigate()
 
   const { isAuthenticated } = useContext(UserContext)
-  const { toggleCart } = useContext(CartContext)
+  const { productsCount, toggleCart } = useContext(CartContext)
 
   const handleLogoClick = () => {
     navigate('/')
@@ -54,7 +54,7 @@ const Header = () => {
         <HeaderItem onClick={toggleCart}>
           {/* Forcando a tipagem do icone */}
           {(BsCart3 as unknown as React.FC<{ size?: number }>)({ size: 25 })}
-          <p style={{ marginLeft: 5 }}>5</p>
+          <p style={{ marginLeft: 5 }}>{productsCount}</p>
         </HeaderItem>
       </HeaderItems>
     </HeaderContainer>
