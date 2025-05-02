@@ -7,9 +7,10 @@ interface ICartContext {
   isVisible: boolean
   products: CartProduct[]
   toggleCart: () => void
-  addProductToCart: (product: string) => void
-  removeProductFromCart: (productId: Product) => void
-  increaseProductQuantity: (productId: Product) => void
+  addProductToCart: (product: Product) => void
+  removeProductFromCart: (productId: string) => void
+  increaseProductQuantity: (productId: string) => void
+  decreaseProductQuantity: (productId: string) => void
 }
 
 export const CartContext = createContext<ICartContext>({
@@ -18,7 +19,8 @@ export const CartContext = createContext<ICartContext>({
   toggleCart: () => {},
   addProductToCart: () => {},
   removeProductFromCart: () => {},
-  increaseProductQuantity: () => {}
+  increaseProductQuantity: () => {},
+  decreaseProductQuantity: () => {}
 })
 
 interface CartContextProps {
@@ -33,6 +35,7 @@ const CartContextProvider = ({ children }: CartContextProps) => {
     setIsVisible((prevState) => !prevState)
   }
 
+  // adicionar produto ao carrinho
   const addProductToCart = (product: Product) => {
     // verificar se o produto ja esta no carrinho
     const productIsAlreadyInCart = products.some(
@@ -54,12 +57,14 @@ const CartContextProvider = ({ children }: CartContextProps) => {
     setProducts((prevState) => [...prevState, { ...product, quantity: 1 }])
   }
 
+  // remover produto do carrinho
   const removeProductFromCart = (productId: string) => {
     setProducts(products =>
       products.filter((product) => product.id !== productId)
     )
   }
 
+  // aumentar a quantidade do produto
   const increaseProductQuantity = (productId: string) {
     setProducts(products => 
       products.map((product) => 
@@ -67,6 +72,17 @@ const CartContextProvider = ({ children }: CartContextProps) => {
           ? { ...product, quantity: product.quantity + 1 }
           : product
       )
+    )
+  }
+
+  // diminuir a quantidade do produto
+  const decreaseProductQuantity = (productId: string) => {
+    setProducts(products =>
+      products.map(product => 
+        product.id === productId ? { ...product, quantity: product.quantity - 1}
+        : product
+      )
+      .filter(product => product.quantity > 0)
     )
   }
 
@@ -78,7 +94,8 @@ const CartContextProvider = ({ children }: CartContextProps) => {
         toggleCart,
         addProductToCart,
         removeProductFromCart,
-        increaseProductQuantity
+        increaseProductQuantity,
+        decreaseProductQuantity
       }}
     >
       {children}
