@@ -30,6 +30,23 @@ const CartContextProvider = ({ children }: CartContextProps) => {
   }
 
   const addProductToCart = (product: Product) => {
+    // verificar se o produto ja esta no carrinho
+    const productIsAlreadyInCart = products.some(
+      (item) => item.id === product.id
+    )
+
+    // se sim, aumentar sua quantidade
+    if (productIsAlreadyInCart) {
+      return setProducts((products) =>
+        products.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      )
+    }
+
+    // se nao -> adiciona-lo
     setProducts((prevState) => [...prevState, { ...product, quantity: 1 }])
   }
 
