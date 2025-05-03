@@ -17,6 +17,7 @@ import { userConverter } from './converters/firestore.converters'
 import Loading from './components/loading/loading.component'
 import Cart from './components/cart/cart.component'
 import Checkout from './components/checkout/checkout.component'
+import AuthenticationGuard from './guards/authentication.guards'
 
 import CategoryDetailsPage from './pages/category-details/category-details.page'
 
@@ -60,7 +61,14 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/explore' element={<ExplorePage />} />
         <Route path='/category/:id' element={<CategoryDetailsPage />} />
-        <Route path='/checkout' element={<Checkout />} />
+        <Route
+          path='/checkout'
+          element={
+            <AuthenticationGuard>
+              <Checkout />
+            </AuthenticationGuard>
+          }
+        />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/sign-up' element={<SignUpPage />} />
       </Routes>
