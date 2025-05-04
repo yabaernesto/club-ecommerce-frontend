@@ -17,6 +17,8 @@ import { userConverter } from './converters/firestore.converters'
 import Loading from './components/loading/loading.component'
 import Cart from './components/cart/cart.component'
 import Checkout from './components/checkout/checkout.component'
+import PaymentConfirmation from './pages/payment-confirmation/payment-confirmation.component'
+
 import AuthenticationGuard from './guards/authentication.guards'
 
 import CategoryDetailsPage from './pages/category-details/category-details.page'
@@ -69,6 +71,7 @@ const App = () => {
             </AuthenticationGuard>
           }
         />
+        <Route path='/payment-confirmation' element={<PaymentConfirmation />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/sign-up' element={<SignUpPage />} />
       </Routes>
