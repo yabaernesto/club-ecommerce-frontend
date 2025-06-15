@@ -1,9 +1,11 @@
-import { createContext, ReactNode, useState } from 'react'
+import { useState, createContext, ReactNode } from 'react'
 
 import { collection, getDocs } from 'firebase/firestore'
+
 import { categoryConverters } from '../converters/firestore.converters'
 
 import Category from '../types/category.types'
+
 import { db } from '../config/firebase.config'
 
 interface ICategoryContext {
@@ -38,7 +40,7 @@ const CategoryContextProvider = ({
       )
 
       querySnapshot.forEach((doc) => {
-        categoriesFromFireStore.push(doc.data)
+        categoriesFromFireStore.push(doc.data())
       })
 
       setCategories(categoriesFromFireStore)
