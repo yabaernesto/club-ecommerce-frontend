@@ -11,7 +11,7 @@ import {
 } from 'firebase/auth'
 import { addDoc, collection } from 'firebase/firestore'
 
-import CustomInput from '../../components/cunstom-input/custom-input.component'
+import CustomInput from '../../components/custom-input/custom-input.component'
 import CustomButton from '../../components/custom-button/custom-button.component'
 import InputErrorMessage from '../../components/input-error-message/input-error-message.component'
 import Header from '../../components/header/header.component'

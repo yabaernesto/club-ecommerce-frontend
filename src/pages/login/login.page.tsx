@@ -15,7 +15,7 @@ import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
 
 import CustomButton from '../../components/custom-button/custom-button.component'
 import Header from '../../components/header/header.component'
-import CustomInput from '../../components/cunstom-input/custom-input.component'
+import CustomInput from '../../components/custom-input/custom-input.component'
 import InputErrorMessage from '../../components/input-error-message/input-error-message.component'
 import Loading from '../../components/loading/loading.component'
 
