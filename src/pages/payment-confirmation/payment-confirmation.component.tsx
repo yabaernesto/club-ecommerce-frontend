@@ -24,7 +24,7 @@ const PaymentConfirmation = () => {
   const [searchParams] = useSearchParams()
 
   const status = searchParams.get('success')
-  const isCanceled = searchParams.get('canceled') === true
+  const isCanceled = searchParams.get('canceled') === 'true'
 
   useEffect(() => {
     if (status === 'true') {

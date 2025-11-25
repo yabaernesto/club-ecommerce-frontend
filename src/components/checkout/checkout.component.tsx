@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { BsBagCheck } from 'react-icons/bs'
 import axios from 'axios'
 
@@ -21,8 +20,6 @@ import env from '../../config/env.config'
 const Checkout = () => {
   const { products, productsTotalPrice } = useContext(CartContext)
   const [isLoading, setIsLoading] = useState(false)
-
-  const navigate = useNavigate()
 
   const handleFinishPurchaseClick = async () => {
     try {
