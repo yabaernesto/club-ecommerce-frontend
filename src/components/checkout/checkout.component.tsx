@@ -19,7 +19,7 @@ import Loading from '../loading/loading.component'
 import env from '../../config/env.config'
 
 const Checkout = () => {
-  const { products, productsTotalPrice, toggleCart } = useContext(CartContext)
+  const { products, productsTotalPrice } = useContext(CartContext)
   const [isLoading, setIsLoading] = useState(false)
 
   const navigate = useNavigate()
