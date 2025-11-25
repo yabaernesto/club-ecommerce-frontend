@@ -2,9 +2,11 @@ import { useContext, useEffect, useState } from 'react'
 
 import { BsGoogle } from 'react-icons/bs'
 import { FiLogIn } from 'react-icons/fi'
+
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { isEmail } from 'validator'
+
 import {
   AuthErrorCodes,
   signInWithEmailAndPassword,

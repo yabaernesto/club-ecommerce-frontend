@@ -2,8 +2,10 @@ import { useContext, useEffect, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import { FiLogIn } from 'react-icons/fi'
+
 import { useForm } from 'react-hook-form'
 import { isEmail } from 'validator'
+
 import {
   AuthErrorCodes,
   createUserWithEmailAndPassword,
