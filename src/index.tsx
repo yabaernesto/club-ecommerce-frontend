@@ -5,8 +5,8 @@ import reportWebVitals from './reportWebVitals'
 import App from './App'
 
 import { UserContextProvider } from './contexts/user.context'
-import CategoryContextProvider from './contexts/category.context'
-import CartContextProvider from './contexts/cart.context'
+import { CategoryContextProvider } from './contexts/category.context'
+import { CartContextProvider } from './contexts/cart.context'
 
 import './index.css'
 

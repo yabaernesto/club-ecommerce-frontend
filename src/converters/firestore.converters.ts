@@ -3,6 +3,7 @@ import {
   SnapshotOptions,
   DocumentData
 } from 'firebase/firestore'
+
 import Category from '../types/category.types'
 import type User from '../types/user.types'
 

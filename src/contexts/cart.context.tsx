@@ -33,7 +33,7 @@ interface CartContextProps {
   children: ReactNode
 }
 
-const CartContextProvider = ({ children }: CartContextProps) => {
+export const CartContextProvider = ({ children }: CartContextProps) => {
   const [isVisible, setIsVisible] = useState(false)
   const [products, setProducts] = useState<CartProduct[]>([])
 
@@ -141,5 +141,3 @@ const CartContextProvider = ({ children }: CartContextProps) => {
     </CartContext.Provider>
   )
 }
-
-export default CartContextProvider

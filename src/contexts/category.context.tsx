@@ -3,10 +3,9 @@ import { useState, createContext, ReactNode } from 'react'
 import { collection, getDocs } from 'firebase/firestore'
 
 import { categoryConverters } from '../converters/firestore.converters'
+import { db } from '../config/firebase.config'
 
 import Category from '../types/category.types'
-
-import { db } from '../config/firebase.config'
 
 interface ICategoryContext {
   categories: Category[]
@@ -24,7 +23,7 @@ interface CategoryContextProviderProps {
   children: ReactNode
 }
 
-const CategoryContextProvider = ({
+export const CategoryContextProvider = ({
   children
 }: CategoryContextProviderProps) => {
   const [categories, setCategories] = useState<Category[]>([])
@@ -35,6 +34,7 @@ const CategoryContextProvider = ({
       setIsLoading(true)
 
       const categoriesFromFireStore: Category[] = []
+
       const querySnapshot = await getDocs(
         collection(db, 'categories').withConverter(categoryConverters)
       )
@@ -59,5 +59,3 @@ const CategoryContextProvider = ({
     </CategoryContext.Provider>
   )
 }
-
-export default CategoryContextProvider
