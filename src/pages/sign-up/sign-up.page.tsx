@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from 'react'
-
 import { useNavigate } from 'react-router-dom'
-import { FiLogIn } from 'react-icons/fi'
-
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useSelector } from 'react-redux'
 import { isEmail } from 'validator'
+
+import { FiLogIn } from 'react-icons/fi'
 
 import {
   AuthErrorCodes,
@@ -27,7 +27,6 @@ import {
 } from './sign-up.stales'
 
 import { auth, db } from '../../config/firebase.config'
-import { UserContext } from '../../contexts/user.context'
 
 interface SignUpForm {
   name: string
@@ -50,7 +49,9 @@ const SignUpPage = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const { isAuthenticated } = useContext(UserContext)
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  )
 
   const navigate = useNavigate()
 

@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { useSelector } from 'react-redux'
+import { isEmail } from 'validator'
 
 import { BsGoogle } from 'react-icons/bs'
 import { FiLogIn } from 'react-icons/fi'
-
-import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
-import { isEmail } from 'validator'
 
 import {
   AuthErrorCodes,
@@ -30,7 +30,6 @@ import {
 } from './login.styles'
 
 import { auth, db, googleProvider } from '../../config/firebase.config'
-import { UserContext } from '../../contexts/user.context'
 
 interface LoginForm {
   email: string
@@ -47,7 +46,9 @@ const LoginPage = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const { isAuthenticated } = useContext(UserContext)
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  )
 
   const navigate = useNavigate()
 
