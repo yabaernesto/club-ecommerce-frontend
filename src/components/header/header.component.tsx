@@ -16,6 +16,7 @@ import {
 import { auth } from '../../config/firebase.config'
 import { logoutUser } from '../../store/reducers/user/user.actions'
 import { CartContext } from '../../contexts/cart.context'
+import { toggleCart } from '../../store/cart/cart.action'
 
 const Header = () => {
   const navigate = useNavigate()
@@ -25,7 +26,7 @@ const Header = () => {
   const { isAuthenticated } = useSelector(
     (rootReducer: any) => rootReducer.userReducer
   )
-  const { productsCount, toggleCart } = useContext(CartContext)
+  const { productsCount } = useContext(CartContext)
 
   const handleLogoClick = () => {
     navigate('/')
@@ -48,6 +49,10 @@ const Header = () => {
     signOut(auth)
   }
 
+  const handleCartClick = () => {
+    dispatch(toggleCart())
+  }
+
   return (
     <HeaderContainer>
       <HeaderTitle onClick={handleLogoClick}>CLUB CLOTHING</HeaderTitle>
@@ -62,7 +67,7 @@ const Header = () => {
         {isAuthenticated && (
           <HeaderItem onClick={handleSignOutClick}>Sair</HeaderItem>
         )}
-        <HeaderItem onClick={toggleCart}>
+        <HeaderItem onClick={handleCartClick}>
           {/* Forcando a tipagem do icone */}
           {(BsCart3 as unknown as React.FC<{ size?: number }>)({ size: 25 })}
           <p style={{ marginLeft: 5 }}>{productsCount}</p>
