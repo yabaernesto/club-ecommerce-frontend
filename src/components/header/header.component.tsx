@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { signOut } from 'firebase/auth'
 
 import { BsCart3 } from 'react-icons/bs'
 
@@ -11,10 +12,10 @@ import {
   HeaderTitle
 } from './header.styles'
 
-import { CartContext } from '../../contexts/cart.context'
-
-import { signOut } from 'firebase/auth'
+// utilities
 import { auth } from '../../config/firebase.config'
+import { logout } from '../../store/reducers/user/user.actions'
+import { CartContext } from '../../contexts/cart.context'
 
 const Header = () => {
   const navigate = useNavigate()
@@ -43,7 +44,7 @@ const Header = () => {
   }
 
   const handleSignOutClick = () => {
-    dispatch({ type: 'LOGOUT_USER' })
+    dispatch(logout())
     signOut(auth)
   }
 

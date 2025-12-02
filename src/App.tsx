@@ -24,6 +24,8 @@ import CategoryDetailsPage from './pages/category-details/category-details.page'
 
 import AuthenticationGuard from './guards/authentication.guards'
 
+import { loginUser, logout } from './store/reducers/user/user.actions'
+
 const App = () => {
   const [isInitializing, setIsInitialing] = useState(true)
 
@@ -38,7 +40,7 @@ const App = () => {
       const isSigningOut = isAuthenticated && !user
 
       if (isSigningOut) {
-        dispatch({ type: 'LOGOUT_USER' })
+        dispatch(logout())
 
         return setIsInitialing(false)
       }
@@ -55,7 +57,7 @@ const App = () => {
 
         const userFromFirestore = querySnapshot.docs[0]?.data()
 
-        dispatch({ type: 'LOGIN_USER', payload: userFromFirestore })
+        dispatch(loginUser(userFromFirestore))
 
         return setIsInitialing(false)
       }
