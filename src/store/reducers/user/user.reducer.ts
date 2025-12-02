@@ -1,6 +1,6 @@
-import type { User } from 'firebase/auth'
-
+import type User from '../../../types/user.types'
 import UserActionType from './user.action-type'
+import { UserActions } from './user.actions'
 
 interface InitialState {
   currentUser: User | null
@@ -12,7 +12,10 @@ const initialState: InitialState = {
   isAuthenticated: false
 }
 
-const userReducer = (state = initialState, action = any) => {
+const userReducer = (
+  state = initialState,
+  action: UserActions
+): InitialState => {
   switch (action.type) {
     case UserActionType.LOGIN:
       return { ...state, currentUser: action.payload, isAuthenticated: true }
