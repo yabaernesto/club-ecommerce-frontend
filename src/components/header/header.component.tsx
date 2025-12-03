@@ -1,6 +1,5 @@
-import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { signOut } from 'firebase/auth'
 
 import { BsCart3 } from 'react-icons/bs'
@@ -15,7 +14,6 @@ import {
 // utilities
 import { auth } from '../../config/firebase.config'
 import { logoutUser } from '../../store/reducers/user/user.actions'
-import { CartContext } from '../../contexts/cart.context'
 import { toggleCart } from '../../store/cart/cart.action'
 import { useAppSelector } from '../../hooks/redux.hooks'
 import { selectProductsCount } from '../../store/cart/cart.selectors'
