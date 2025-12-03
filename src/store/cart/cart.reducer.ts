@@ -1,5 +1,5 @@
 import type CartProduct from '../../types/cart.types'
-import CartActionType from './cart.action-types'
+import CartActionTypes from './cart.action-types'
 
 interface InitialState {
   isVisible: boolean
@@ -15,7 +15,7 @@ const cartReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case 'cart/toggle':
       return { ...state, isVisible: !state.isVisible }
-    case CartActionType.addProductToCart: {
+    case CartActionTypes.addProductToCart: {
       const product = action.payload
 
       const productIsAlreadyInCart = state.products.some(
@@ -40,6 +40,38 @@ const cartReducer = (state = initialState, action: any) => {
         products: [...state.products, { ...product, quantity: 1 }]
       }
     }
+    case CartActionTypes.removeProductFromCart:
+      return {
+        ...state,
+        products: state.products.filter(
+          (product) => product.id !== action.payload
+        )
+      }
+    case CartActionTypes.increaseCartProductQuantity:
+      return {
+        ...state,
+        products: state.products.map((product) =>
+          product.id === action.payload
+            ? { ...product, quantity: product.quantity + 1 }
+            : product
+        )
+      }
+    case CartActionTypes.decreaseCartProductQuantity:
+      return {
+        ...state,
+        products: state.products
+          .map((product) =>
+            product.id === action.payload
+              ? { ...product, quantity: product.quantity - 1 }
+              : product
+          )
+          .filter((product) => product.quantity > 0)
+      }
+    case CartActionTypes.clearCartProducts:
+      return {
+        ...state,
+        products: []
+      }
     default:
       return { ...state }
   }
