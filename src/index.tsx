@@ -4,7 +4,7 @@ import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
 
 import App from './App'
-import store from './store/store'
+import { store } from './store/store'
 
 import { CategoryContextProvider } from './contexts/category.context'
 import { CartContextProvider } from './contexts/cart.context'
