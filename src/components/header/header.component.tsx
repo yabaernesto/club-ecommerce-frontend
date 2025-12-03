@@ -17,16 +17,19 @@ import { auth } from '../../config/firebase.config'
 import { logoutUser } from '../../store/reducers/user/user.actions'
 import { CartContext } from '../../contexts/cart.context'
 import { toggleCart } from '../../store/cart/cart.action'
+import { useAppSelector } from '../../hooks/redux.hooks'
+import { selectProductsCount } from '../../store/cart/cart.selectors'
 
 const Header = () => {
   const navigate = useNavigate()
 
   const dispatch = useDispatch()
 
-  const { isAuthenticated } = useSelector(
+  const { isAuthenticated } = useAppSelector(
     (rootReducer: any) => rootReducer.userReducer
   )
-  const { productsCount } = useContext(CartContext)
+
+  const productsCount = useAppSelector(selectProductsCount)
 
   const handleLogoClick = () => {
     navigate('/')

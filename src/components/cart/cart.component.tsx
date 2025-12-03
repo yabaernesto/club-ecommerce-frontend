@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -15,14 +14,18 @@ import {
   CartTotal
 } from './cart.styles'
 
-import { CartContext } from '../../contexts/cart.context'
 import { useAppSelector } from '../../hooks/redux.hooks'
 import { toggleCart } from '../../store/cart/cart.action'
+import {
+  selectProductsCount,
+  selectProductsTotalPrice
+} from '../../store/cart/cart.selectors'
 
 const Cart = () => {
   const { isVisible, products } = useAppSelector((state) => state.cartReducer)
 
-  const { productsTotalPrice, productsCount } = useContext(CartContext)
+  const productsTotalPrice = useAppSelector(selectProductsTotalPrice)
+  const productsCount = useAppSelector(selectProductsCount)
 
   const navigate = useNavigate()
 
